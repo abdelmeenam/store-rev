@@ -15,18 +15,9 @@
         </div>
 
 
-            @if(session()->has('success'))
-                <div class="alert alert-success">
-                    {{session('success')}}
-                </div>
-            @endif
-
-        @if(session()->has('error'))
-            <div class="alert alert-info">
-                {{session('error')}}
-            </div>
-        @endif
-
+        <!-- Display Alert  components-->
+        <x-alert type="info"/>
+        <x-alert type="success"/>
 
         <table class="table">
             <thead>

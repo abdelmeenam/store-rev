@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
+use Illuminate\Support\Facades\Storage;
 
 
 class CategoriesController extends Controller
@@ -28,7 +29,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = $this->categories;
-        return view('back.categories.index' , compact('categories'));
+        return view('back.categories.index', compact('categories'));
     }
 
     /**
@@ -40,7 +41,7 @@ class CategoriesController extends Controller
     {
         $parents = $this->categories;
         $category = new Category();
-        return view('back.categories.create' , compact('parents' , 'category'));
+        return view('back.categories.create', compact('parents', 'category'));
     }
 
     /**
@@ -49,16 +50,16 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->merge(['slug'=> Str::slug($request->name)]);
+        $request->merge(['slug' => Str::slug($request->name)]);
         // Upload image
         $data = $request->except('image');
         $path = $this->uploadImage($request);
         $data['image'] = $path;
 
-        $category =Category::create($data);
-        return redirect()->route('dashboard.categories.index')->with('success' , 'category created successfuly');
+        $category = Category::create($data);
+        return redirect()->route('dashboard.categories.index')->with('success', 'category created successfuly');
     }
 
 
@@ -86,18 +87,18 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        try{
+        try {
             $category = Category::findOrFail($id);
-        }catch (\Exception $e){
-            return redirect()->route('dashboard.categories.index')->with('error' , 'category not found');
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard.categories.index')->with('info', 'category not found');
         }
 
         //Select * from categories WHERE $id =! 'id' AND ( $id != 'parent_id' OR  parent_id !== NULL )
-        $parents = Category::where('id' ,'<>' , $id)
-            ->where(function ($query) use ($id){
-                $query->whereNULL('parent_id')->orWhere('parent_id' , '<>' , $id);
+        $parents = Category::where('id', '<>', $id)
+            ->where(function ($query) use ($id) {
+                $query->whereNULL('parent_id')->orWhere('parent_id', '<>', $id);
             })->get();
-        return view('back.categories.edit' , compact('category' , 'parents'));
+        return view('back.categories.edit', compact('category', 'parents'));
     }
 
     /**
@@ -107,25 +108,27 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $category = Category::where('id' , $id)->first();
-        $request->merge(['slug'=> Str::slug($request->name)]);
+        $category = Category::where('id', $id)->first();
+        $request->merge(['slug' => Str::slug($request->name)]);
 
         // Upload image
         $oldImage = $category->image;
         $data = $request->except('image');
         $newImagePath = $this->uploadImage($request);
+
         if ($newImagePath) {
             $data['image'] = $newImagePath;
         }
+
         $category->update($data);
 
         //Delete the old image
         if ($oldImage && $newImagePath) {
             Storage::disk('public')->delete($oldImage);
         }
-        return redirect()->route('dashboard.categories.index')->with('success' , 'category updated successfuly');
+        return redirect()->route('dashboard.categories.index')->with('success', 'category updated successfuly');
     }
 
     /**
@@ -136,13 +139,13 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail( $id);
+        $category = Category::findOrFail($id);
         $category->delete();
         //delete image
-        if ($category->image){
+        if ($category->image) {
             Storage::disk('public')->delete($category->image);
         }
-        return  redirect()->route('dashboard.categories.index')->with('success' , 'category deleted successfuly');
+        return  redirect()->route('dashboard.categories.index')->with('success', 'category deleted successfuly');
     }
 
 

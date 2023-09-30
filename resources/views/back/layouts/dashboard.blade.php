@@ -59,7 +59,7 @@
 
 
             <!-------------------- Notifications Dropdown Menu ----------------->
-{{--            <x-dashboard.notifications-menu count=7 />--}}
+    {{--   <x-dashboard.notifications-menu count=7 />--}}
 
             <li class="nav-item">
                 <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -74,7 +74,9 @@
             </li>
         </ul>
     </nav>
-    <!-- /.navbar -->
+
+
+
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
@@ -117,7 +119,8 @@
             </div>
 
             <!------------------------- Sidebar Menu ------------------>
-             @include('back.layouts.partials.nav')
+             {{-- @include('back.layouts.partials.nav') --}}
+             <x-navbar/>
             <!------------------------ /.sidebar-menu ------------------>
 
         </div>
