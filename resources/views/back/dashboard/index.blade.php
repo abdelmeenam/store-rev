@@ -20,9 +20,6 @@
     </div>
 @endsection
 
-
-
-
 @push('styles')
     <!-- DataTables -->
 {{--    <link rel="stylesheet" href="{{ asset('testttttttttttt') }}">--}}

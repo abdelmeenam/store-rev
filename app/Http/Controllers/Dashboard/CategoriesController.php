@@ -53,6 +53,7 @@ class CategoriesController extends Controller
     public function store(CategoryRequest $request)
     {
         $request->merge(['slug' => Str::slug($request->name)]);
+
         // Upload image
         $data = $request->except('image');
         $path = $this->uploadImage($request);

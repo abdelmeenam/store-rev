@@ -8,7 +8,7 @@
                 <p>
                     {{ $item['title'] }}
                     @if(isset($item['badge']))
-                    <span class="right badge badge-danger">{{ $item['badge'] }}</span>
+                        <span class="right badge badge-danger">{{ $item['badge'] }}</span>
                     @endif
                 </p>
             </a>

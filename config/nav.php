@@ -13,5 +13,20 @@ return [
         'title' => 'Categories',
         'badge' => 'Categories',
         'active' => 'dashboard.categories.*',
-    ]
+    ],
+    [
+        'icon' => 'fas fa-users nav-icon',
+        'route' => 'dashboard.users.index',
+        'title' => 'Users',
+        'badge' => 'Users',
+         'active' => 'dashboard.users.*',
+    ],
+
+    [
+        'icon' => 'fas fa-sign-out-alt nav-icon',
+        'route' => 'logout',
+        'title' => 'Logout',
+        'active' => 'logout',
+    ],
+
 ];

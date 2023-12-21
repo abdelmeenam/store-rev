@@ -9,11 +9,14 @@
     <label for="">Parent category</label>
     <select name="parent_id" class="form-control form-select">
         <option value="">Primary</option>
+
         @foreach($parents as $parent)
-            <option value="{{$parent->id}}"  @  (old($parent->id , $category->parent_id) === $category->parent_id ) >
+            //old('value', 'default');
+            <option value="{{$parent->id}}"  @selected(old ($parent->id , $parent->id) === $category->parent_id)  >
                 {{$parent->name}}
             </option>
         @endforeach
+
     </select>
 </div>
 
