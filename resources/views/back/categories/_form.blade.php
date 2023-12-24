@@ -12,7 +12,7 @@
 
         @foreach($parents as $parent)
             //old('value', 'default');
-            <option value="{{$parent->id}}"  @selected(old ($parent->id , $parent->id) === $category->parent_id)  >
+            <option value="{{$parent->id}}"  @selected(old ($parent->id , $parent->id) === $category->parent_id)>
                 {{$parent->name}}
             </option>
         @endforeach

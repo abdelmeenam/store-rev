@@ -7,7 +7,7 @@
                 <i class="{{ $item['icon'] }}"></i>
                 <p>
                     {{ $item['title'] }}
-                    @if(isset($item['badge']))
+                    @if($item['route'] == $active && isset($item['badge']) )
                         <span class="right badge badge-danger">{{ $item['badge'] }}</span>
                     @endif
                 </p>

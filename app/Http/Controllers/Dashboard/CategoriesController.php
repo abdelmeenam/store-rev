@@ -26,9 +26,29 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = $this->categories;
+        // SEARCH METHOD [1]
+        // $categoryBuilder = Category::query();               // query builder of category model
+        // if ($name = $request->query('name')) {      // value from query parameters
+        //     $categoryBuilder->where('name', 'LIKE', '%'. $name. '%');
+        // }
+        // if ($status = $request->query('status')) {
+        //     $categoryBuilder->whereStatus( $status);
+        // }
+        // $categories = $categoryBuilder->paginate(4);
+
+        // SEARCH METHOD [2]
+        // select a.*  , b.name as parent_name from categories as a inner join categories as b on b.id = a.parent_id
+        $categories = Category::join('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
+        ->select('categories.*', 'parents.name as parent_name')
+        ->Filter($request->query())
+        ->latest()
+        ->paginate(4);
+
+        // SCOPES USAGE
+        // $activeCategoriesCount = Category::active()->count();
+        // $categories = Category::status('archived')->count();
         return view('back.categories.index', compact('categories'));
     }
 
@@ -132,22 +152,6 @@ class CategoriesController extends Controller
         return redirect()->route('dashboard.categories.index')->with('success', 'category updated successfuly');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        //delete image
-        if ($category->image) {
-            Storage::disk('public')->delete($category->image);
-        }
-        return  redirect()->route('dashboard.categories.index')->with('success', 'category deleted successfuly');
-    }
 
 
     /**
@@ -160,4 +164,40 @@ class CategoriesController extends Controller
     {
         return view('back.categories.show', ['category' => $category]);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return  redirect()->route('dashboard.categories.index')->with('success', 'category deleted successfuly');
+    }
+
+
+
+    public function trash(Request $request)
+    {
+        $categories = Category::onlyTrashed()->paginate(2);
+        return view('back.categories.trash', compact('categories'));
+    }
+
+    public function restore(Request $request , $id){
+        $category = Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        return redirect()->route('dashboard.categories.trash')->with('success', 'category restored successfuly');
+    }
+
+
+     public function forceDelete($id){
+        $category = Category::onlyTrashed()->findOrFail($id);
+        Storage::disk('public')->delete($category->image);
+        $category->forceDelete();
+        return redirect()->route('dashboard.categories.trash')->with('success', 'category force deleted successfuly');
+    }
+
 }

@@ -2,12 +2,14 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
 class Navbar extends Component
 {
 
     public $items;
+    public $active;
 
 
     /**
@@ -15,9 +17,10 @@ class Navbar extends Component
      *
      * @return void
      */
-    public function __construct()
+    public function __construct( )
     {
         $this->items = config('nav');
+        $this->active =  Route::currentRouteName();
     }
 
     /**

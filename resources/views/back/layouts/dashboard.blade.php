@@ -120,7 +120,7 @@
 
             <!------------------------- Sidebar Menu ------------------>
              {{-- @include('back.layouts.partials.nav') --}}
-             <x-navbar/>
+             <x-navbar />
             <!------------------------ /.sidebar-menu ------------------>
 
         </div>

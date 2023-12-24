@@ -14,6 +14,16 @@ Route::group(['middleware' => ['auth' , 'verified'], 'prefix' => 'dashboard', 'a
     Route::resource('/users', CategoriesController::class);
 
     // Categories
+    Route::get('/categories/trash', [CategoriesController::class , 'trash'])
+        ->name('categories.trash');
+
+    Route::get('/categories/{id}/restore', [CategoriesController::class,'restore'])
+        ->name('categories.restore');
+
+    Route::delete('/categories/{id}/force-delete', [CategoriesController::class,'forceDelete'])
+        ->name('categories.force-delete');
+
+
     Route::resource('/categories', CategoriesController::class);
 });
 
