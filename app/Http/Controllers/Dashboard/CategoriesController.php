@@ -39,12 +39,20 @@ class CategoriesController extends Controller
         // $categories = $categoryBuilder->paginate(4);
 
         // SEARCH METHOD [2]
-        // select a.*  , b.name as parent_name from categories as a inner join categories as b on b.id = a.parent_id
-        $categories = Category::join('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
-        ->select('categories.*', 'parents.name as parent_name')
+        // select a.*  , b.name as parent_name from categories as a left join categories as b on b.id = a.parent_id
+        // $categories = Category::leftjoin('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
+        // ->select(['categories.*', 'parents.name as parent_name'])
+        // ->Filter($request->query())
+        // ->latest()
+        // ->paginate(5);
+
+        // SEARCH METHOD [3]
+        $categories = Category::with('parent')
+        ->withCount('products')
         ->Filter($request->query())
-        ->latest()
-        ->paginate(4);
+        ->paginate(5);
+
+
 
         // SCOPES USAGE
         // $activeCategoriesCount = Category::active()->count();

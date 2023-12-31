@@ -1,6 +1,6 @@
-@extends('back.Layouts.dashboard')
+@extends('Admin.Layouts.dashboard')
 
-@section('title', $category->name.' category')
+@section('title', $category->name)
 
 @section('breadcrumb')
     @parent
@@ -13,23 +13,22 @@
     <table class="table">
         <thead>
         <tr>
-
+            <th></th>
             <th>Name</th>
-            <th>Image</th>
             <th>Store</th>
             <th>Status</th>
             <th>Created At</th>
         </tr>
         </thead>
         <tbody>
-        @php
-        //    $products = $category->products()->latest()->paginate(2);
-        @endphp
-        @forelse($category->products as $product)
+{{--        @php--}}
+{{--            $products = $category->products()->with('store')->latest()->paginate(5);--}}
+{{--        @endphp--}}
+        @forelse($products as $product)
             <tr>
-                <td>{{ $product->name }}</td>
                 <td><img src="{{ asset('storage/' . $product->image) }}" alt="" height="50"></td>
-                {{-- <td>{{ $product->store->name }}</td> --}}
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->store->name }}</td>
                 <td>{{ $product->status }}</td>
                 <td>{{ $product->created_at }}</td>
             </tr>
@@ -41,6 +40,6 @@
         </tbody>
     </table>
 
-    {{-- {{ $products->links() }} --}}
+    {{ $products->links() }}
 
 @endsection

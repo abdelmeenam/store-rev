@@ -25,16 +25,16 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Store::factory(5)->create();
-        Category::factory(10)->create();
-        Product::factory(50)->create();
+        // Store::factory(5)->create();
+        // Category::factory(10)->create();
+        // Product::factory(50)->create();
         // php artisan db:seed
 
 
         // call user seeder
-        // $this->call([
-        //     UserSeeder::class,
-        //     //PostSeeder::class,
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            //PostSeeder::class,
+        ]);
     }
 }

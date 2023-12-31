@@ -16,6 +16,13 @@ return [
     ],
     [
         'icon' => 'fas fa-users nav-icon',
+        'route' => 'dashboard.products.index',
+        'title' => 'Products',
+        'badge' => 'products',
+         'active' => 'dashboard.products.*',
+    ],
+    [
+        'icon' => 'fas fa-users nav-icon',
         'route' => 'dashboard.users.index',
         'title' => 'Users',
         'badge' => 'Users',

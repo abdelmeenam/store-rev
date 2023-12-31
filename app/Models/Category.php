@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use App\Rules\FilterForbiddenWords;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Product;
 use Illuminate\Validation\Rule;
+use App\Rules\FilterForbiddenWords;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
@@ -20,10 +21,12 @@ class Category extends Model
     {
         return $query->where('status', 'active');
     }
+
     public function scopeStatus(Builder $query, $status)
     {
         return $query->where('status', $status);
     }
+
     public function scopeFilter( Builder $query, $filters)
     {
         //dd($filters['name'] , $filters['status']);                            // query parameters
@@ -45,9 +48,6 @@ class Category extends Model
 
         return $query;
     }
-
-
-
 
     // category validation rules
     public static function rules($id = 0)
@@ -78,4 +78,22 @@ class Category extends Model
             'status' => 'required|in:active,archived',
         ];
     }
+
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id')
+        ->withDefault(['name' => '-']);    // if the relation has no parent , it will returndefault instead of "name" on null
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+
 }

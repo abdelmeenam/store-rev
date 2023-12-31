@@ -16,11 +16,21 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // User::create([
+        //     'name' => 'Abdelmonem Mohamed',
+        //     'email' => 'abdelmeenam@gmail.com',
+        //     'password' => Hash::make('123'),
+        //     'phone_number' => '01064313821'
+        // ]);
+
+
         User::create([
-            'name' => 'Abdelmonem Mohamed',
-            'email' => 'abdelmeenam@gmail.com',
+            'name' => 'soso sayed',
+            'email' => 'soso@gmail.com',
             'password' => Hash::make('123'),
-            'phone_number' => '01064313821'
+            'phone_number' => '06555'
         ]);
+
+
     }
 }
