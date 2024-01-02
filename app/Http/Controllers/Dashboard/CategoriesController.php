@@ -170,6 +170,8 @@ class CategoriesController extends Controller
      */
     public function show(Category $category)
     {
+        // category has many products
+        // each product belongs to a store
         return view('back.categories.show', ['category' => $category]);
     }
 

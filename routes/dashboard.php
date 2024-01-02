@@ -22,16 +22,17 @@ Route::group(['middleware' => ['auth' , 'verified'], 'prefix' => 'dashboard', 'a
         ->name('categories.restore');
     Route::delete('/categories/{id}/force-delete', [CategoriesController::class,'forceDelete'])
         ->name('categories.force-delete');
+
     Route::resource('/categories', CategoriesController::class);
 
     // products
-    Route::resource('/products', ProductsController::class);
     Route::get('/products/trash', [ProductsController::class , 'trash'])
         ->name('products.trash');
-    Route::get('/products/{id}/restore', [ProductsController::class,'restore'])
+    Route::post('/products/{id}/restore', [ProductsController::class,'restore'])
         ->name('products.restore');
     Route::delete('/products/{id}/force-delete', [ProductsController::class,'forceDelete'])
         ->name('products.force-delete');
+
     Route::resource('/products', ProductsController::class);
 });
 

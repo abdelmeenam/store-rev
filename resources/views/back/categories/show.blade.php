@@ -23,13 +23,13 @@
         </thead>
         <tbody>
         @php
-        //    $products = $category->products()->latest()->paginate(2);
+           $products = $category->products()->with('store')->paginate(4);
         @endphp
-        @forelse($category->products as $product)
+        @forelse($products as $product)
             <tr>
                 <td>{{ $product->name }}</td>
                 <td><img src="{{ asset('storage/' . $product->image) }}" alt="" height="50"></td>
-                {{-- <td>{{ $product->store->name }}</td> --}}
+                <td>{{ $product->store->name }}</td>
                 <td>{{ $product->status }}</td>
                 <td>{{ $product->created_at }}</td>
             </tr>
@@ -41,6 +41,6 @@
         </tbody>
     </table>
 
-    {{-- {{ $products->links() }} --}}
+    {{ $products->links() }}
 
 @endsection
