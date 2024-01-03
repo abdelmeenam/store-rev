@@ -95,7 +95,7 @@
                          class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="">{{Auth::user()->name ?? 'admin name'}}</a>
+                    <a href="{{ route('dashboard.profile.edit') }}">{{Auth::user()->name ?? 'admin name'}}</a>
                 </div>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf

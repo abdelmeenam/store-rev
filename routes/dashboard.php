@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Dashboard\CategoriesController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\ProductsController;
 use App\Models\Product;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\ProductsController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\CategoriesController;
 
 Route::group(['middleware' => ['auth' , 'verified'], 'prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
@@ -34,6 +35,10 @@ Route::group(['middleware' => ['auth' , 'verified'], 'prefix' => 'dashboard', 'a
         ->name('products.force-delete');
 
     Route::resource('/products', ProductsController::class);
+
+    //-------Profile
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 
