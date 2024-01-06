@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tag;
 use App\Models\Store;
 use App\Models\Category;
 use App\Models\Scopes\StoreScope;
@@ -33,6 +34,16 @@ class Product extends Model
         return $this->belongsTo(Store::class, 'store_id', 'id');
     }
 
+    public function tags(){
+        return $this->belongsToMany(
+            Tag::class,      //Related model
+            'product_tag',     //Pivot table
+            'product_id',  //FK of pivot table for the current
+            'tag_id',    //FK of pivot table for the related
+            'id',             //PK Current
+            'id'              //PK Related
+        );
+    }
 
 
 }

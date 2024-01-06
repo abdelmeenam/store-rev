@@ -6,10 +6,9 @@
 <div class="form-group">
     <select name="category_id" class="form-control form-select">
         <label for="">product category</label>
-
         @foreach($categories as $category)
             //old('value', 'default');
-            <option value="{{$category->id}}"  @selected(old ($category->id , $category->id) == $product->category_id)>
+            <option value="{{$category->id}}"  @selected(old($category->id , $product->category_id) == $category->id)>
                 {{$category->name}}
             </option>
         @endforeach

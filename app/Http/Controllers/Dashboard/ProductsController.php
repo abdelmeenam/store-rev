@@ -65,7 +65,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        // $tags = implode(',', $product->tags()->pluck('name')->toArray());
+        return view('back.products.edit', compact('product'));
     }
 
     /**

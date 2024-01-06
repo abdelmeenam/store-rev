@@ -40,6 +40,7 @@ class CategoriesController extends Controller
 
         // SEARCH METHOD [2]
         // select a.*  , b.name as parent_name from categories as a left join categories as b on b.id = a.parent_id
+
         // $categories = Category::leftjoin('categories as parents' , 'parents.id' , '=' , 'categories.parent_id')
         // ->select(['categories.*', 'parents.name as parent_name'])
         // ->Filter($request->query())

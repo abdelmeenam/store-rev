@@ -9,6 +9,12 @@ use App\Http\Controllers\Dashboard\CategoriesController;
 
 Route::group(['middleware' => ['auth' , 'verified'], 'prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
+
+    //-------Profile
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+
+
     // Home Dashboard
     Route::get('/', [DashboardController::class, 'index'])
         ->name('home');
@@ -36,9 +42,6 @@ Route::group(['middleware' => ['auth' , 'verified'], 'prefix' => 'dashboard', 'a
 
     Route::resource('/products', ProductsController::class);
 
-    //-------Profile
-    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 

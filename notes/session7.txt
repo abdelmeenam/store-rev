@@ -3,3 +3,9 @@
 - soft delete : بتزود فيلد ف المودل وبتدخل ع كلاس المودل تفعلها وتعملها التلاته فانكشن بتوعها انك تشوف كل اللى اتسمح وانك ترجع وانك تمسحه مدي الحياة
 
 - local scope : زي فلتر بنعمله ونستخدمه وقت ما نحب بدل ما نكتبه كل شوية
+
+- Relations
+-----------
+one to many  : product -> [category , store]
+one to one   : user -> profile
+many to many : product -> Tag

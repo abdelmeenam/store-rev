@@ -15,8 +15,8 @@ class ProfileController extends Controller
 
         return view('back.profile.edit', [
             'user' => $user,
-            'countries' => Countries::getNames(),
-            'locales' => Languages::getNames(),
+            'countries' => Countries::getNames('en'),
+            'locales' => Languages::getNames('en'),
         ]);
     }
 
@@ -33,7 +33,7 @@ class ProfileController extends Controller
 
         $user->profile->fill( $request->all() )->save();
 
-        return redirect()->route('back.profile.edit')
+        return redirect()->route('dashboard.profile.edit')
             ->with('success', 'Profile updated!');
     }
 }
