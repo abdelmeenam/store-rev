@@ -16,17 +16,26 @@ class Product extends Model
 {
     use HasFactory , SoftDeletes;
 
+    protected $fillable = [
+        'name', 'slug', 'description', 'image', 'category_id', 'store_id',
+        'price', 'compare_price', 'status',
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope('StoreScope' , new StoreScope);
         //or
         // static::addGlobalScope('StoreScope', function (Builder $builder) {
-        //     $builder->where('store_id', Auth::user()->store_id);}
+        //     $builder->where('store_id', Auth::user()->store_id);
+        // });
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id')
+        ->withDefault([
+            'name'=> 'empty category',
+        ]);
     }
 
     public function store()

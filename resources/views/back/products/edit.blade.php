@@ -1,16 +1,16 @@
 @extends('back.layouts.dashboard')
 
-@section('title', 'Edit Category')
+@section('title', 'Edit Product')
 @section('breadcrumb')
     @parent
     <li class="breadcrumb-item active">categories</li>
 @endsection
 @section('content')
 
-    <form action="{{ route('dashboard.categories.update' , $category->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('dashboard.products.update' , $product->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
-        @include('back.categories._form' , ['button' => 'Update category'])
+        @include('back.products._form' , ['button' => 'Update Product'])
     </form>
 
 @endsection

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Tag;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,7 @@ class ProductsController extends Controller
     {
         //$products  = Product::paginate(5);
         $products  = Product::with(['category' , 'store'])->paginate(6);
+
         return view('back.products.index', compact('products'));
     }
 
@@ -31,8 +34,10 @@ class ProductsController extends Controller
     public function create()
     {
         $product = new Product();
+        $tags = new Product();
         $categories = Category::all();
-        return view('back.products.create'  , compact('product' , 'categories'));
+
+        return view('back.products.create'  , compact('product' , 'categories' , 'tags'));
     }
 
     /**
@@ -66,8 +71,9 @@ class ProductsController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        // $tags = implode(',', $product->tags()->pluck('name')->toArray());
-        return view('back.products.edit', compact('product'));
+        $tags = implode(',', $product->tags()->pluck('name')->toArray());
+        $categories = Category::all();
+        return view('back.products.edit', compact('product' , 'categories' , 'tags'));
     }
 
     /**
@@ -77,9 +83,25 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $product->update($request->except('tags'));
+        //$tags = explode(',', $request->post('tags'));
+        $tags = json_decode($request->post('tags'));   //array of objects
+        $tagsData = Tag::all();
+
+
+        foreach ($tags as $t_name) {
+            //$slug = Str::slug($t_name);
+            $slug = Str::slug($t_name->value);      //access object
+            $tag = $tagsData->where('slug' , $slug)->first();
+            if (!$tag ) {
+                $tag = Tag::create(['name'=>$t_name->value, 'slug'=>$slug]);
+            }
+            $tag_ids[] = $tag->id;
+        }
+        $product->tags()->sync($tag_ids);
+        return  redirect()->route('dashboard.products.index')->with('success', 'product updated successfuly');
     }
 
 

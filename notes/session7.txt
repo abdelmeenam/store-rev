@@ -8,4 +8,20 @@
 -----------
 one to many  : product -> [category , store]
 one to one   : user -> profile
-many to many : product -> Tag
+many to many : product -> product_tag ->Tag
+
+    sync : بنستخدمها ف الميني تو ميني بيتبعتلها داتا وبتاخدها وتروح تشوفها ف الجدول الوسيط ولا لا
+            يعني برودكت 1 وتاج 1 لو موجودين مش هتعمل حاجة
+            لو مش  موجودين هتضيفهم
+            طب لو كان ف الداتا بيز برودكت 1 وتاج 6 وانا مبعتهومش اصلا ، ف هيتمسحوا من الداتا بيز
+                syncqwithoutattach : اضافة بدون حذف
+
+    attach : بتضيف بس
+    deattach : بتحذفه من الجدول
+
+        foreach($tags as $tag)
+            $tag = Tag::where('slug' , $slug)->first();
+
+        $tagsData = Tag::all();
+        foreach($tags as $tag)
+            $tag = $tagsData->where('slug' , $slug)->first();
