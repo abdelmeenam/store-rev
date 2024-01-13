@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Tag;
 use App\Models\Store;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use App\Models\Scopes\StoreScope;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,35 @@ class Product extends Model
         //     $builder->where('store_id', Auth::user()->store_id);
         // });
     }
+
+    public function scopeActive( Builder $builder){
+        $builder->where('status',  'active');
+    }
+
+
+    // Accessors
+    // $product->image_url
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            //default if there are no image
+            return 'https://www.incathlab.com/images/products/default_product.png';
+        }
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+        return asset('storage/' . $this->image);
+    }
+
+    public function getSalePercentAttribute()
+    {
+        // compare_price = orignail price , price : price after discount
+        if (!$this->compare_price) {
+            return 0;
+        }
+        return round( ( 100* ($this->compare_price - $this->price) / $this->compare_price)  );
+    }
+
 
     public function category()
     {

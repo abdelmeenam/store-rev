@@ -27,6 +27,6 @@ class FrontLayout extends Component
      */
     public function render()
     {
-        return view('components.front.blade.php');
+        return view('layouts.front');
     }
 }

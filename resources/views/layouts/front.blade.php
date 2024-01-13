@@ -1,43 +1,34 @@
-
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Login - ShopGrids Bootstrap 5 eCommerce HTML Template.</title>
+    <title>{{ $title }}</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('FrontAssets/images/favicon.svg') }}" />
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="{{ asset('AdminAssets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('AdminAssets/css/tiny-slider.css') }}" />
-    <link rel="stylesheet" href="{{ asset('AdminAssets/css/glightbox.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('AdminAssets/css/main.css') }}" />
-
+    <link rel="stylesheet" href="{{asset('FrontAssets/css/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('FrontAssets/css/LineIcons.3.0.css')}}"/>
+    <link rel="stylesheet" href="{{asset('FrontAssets/css/tiny-slider.css')}}"/>
+    <link rel="stylesheet" href="{{asset('FrontAssets/css/glightbox.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('FrontAssets/css/main.css')}}"/>
+    @stack('styles')
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
-
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-icon">
-                <span></span>
-                <span></span>
+        <!-- Preloader -->
+        <div class="preloader">
+            <div class="preloader-inner">
+                <div class="preloader-icon">
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- /End Preloader -->
-
+        <!-- /End Preloader -->
     <!-- Start Header Area -->
     <header class="header navbar-area">
         <!-- Start Topbar -->
@@ -111,7 +102,7 @@
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
                         <a class="navbar-brand" href="index.html">
-                            <img src="AdminAssets/images/logo/logo.svg" alt="Logo">
+                            <img src="{{ asset('FrontAssets/images/logo/logo.svg') }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
                     </div>
@@ -158,57 +149,8 @@
                                         <span class="total-items">0</span>
                                     </a>
                                 </div>
-                                <div class="cart-items">
-                                    <a href="javascript:void(0)" class="main-btn">
-                                        <i class="lni lni-cart"></i>
-                                        <span class="total-items">2</span>
-                                    </a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span>2 Items</span>
-                                            <a href="cart.html">View Cart</a>
-                                        </div>
-                                        <ul class="shopping-list">
-                                            <li>
-                                                <a href="javascript:void(0)" class="remove" title="Remove this item"><i
-                                                        class="lni lni-close"></i></a>
-                                                <div class="cart-img-head">
-                                                    <a class="cart-img" href="product-details.html"><img
-                                                            src="assets/images/header/cart-items/item1.jpg" alt="#"></a>
-                                                </div>
-
-                                                <div class="content">
-                                                    <h4><a href="product-details.html">
-                                                            Apple Watch Series 6</a></h4>
-                                                    <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)" class="remove" title="Remove this item"><i
-                                                        class="lni lni-close"></i></a>
-                                                <div class="cart-img-head">
-                                                    <a class="cart-img" href="product-details.html"><img
-                                                            src="assets/images/header/cart-items/item2.jpg" alt="#"></a>
-                                                </div>
-                                                <div class="content">
-                                                    <h4><a href="product-details.html">Wi-Fi Smart Camera</a></h4>
-                                                    <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>Total</span>
-                                                <span class="total-amount">$134.00</span>
-                                            </div>
-                                            <div class="button">
-                                                <a href="checkout.html" class="btn animate">Checkout</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/ End Shopping Item -->
-                                </div>
+                                <!--------------------------------------------Cart--------------------------------------->
+                                {{-- <x-cart-menu /> --}}
                             </div>
                         </div>
                     </div>
@@ -217,6 +159,7 @@
         </div>
         <!-- End Header Middle -->
         <!-- Start Header Bottom -->
+
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 col-md-6 col-12">
@@ -282,9 +225,10 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Shop</a>
+                                        <a class="dd-menu collapsed" href="javascript:void(0)"
+                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-3"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">Shop</a>
                                         <ul class="sub-menu collapse" id="submenu-1-3">
                                             <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
                                             <li class="nav-item"><a href="product-list.html">Shop List</a></li>
@@ -294,11 +238,13 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-4" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Blog</a>
+                                        <a class="dd-menu collapsed" href="javascript:void(0)"
+                                            data-bs-toggle="collapse" data-bs-target="#submenu-1-4"
+                                            aria-controls="navbarSupportedContent" aria-expanded="false"
+                                            aria-label="Toggle navigation">Blog</a>
                                         <ul class="sub-menu collapse" id="submenu-1-4">
-                                            <li class="nav-item"><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a>
+                                            <li class="nav-item"><a href="blog-grid-sidebar.html">Blog Grid
+                                                    Sidebar</a>
                                             </li>
                                             <li class="nav-item"><a href="blog-single.html">Blog Single</a></li>
                                             <li class="nav-item"><a href="blog-single-sidebar.html">Blog Single
@@ -314,6 +260,7 @@
                         <!-- End Navbar -->
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-md-6 col-12">
                     <!-- Start Nav Social -->
                     <div class="nav-social">
@@ -342,30 +289,15 @@
     <!-- End Header Area -->
 
     <!-- Start Breadcrumbs -->
-    <div class="breadcrumbs">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">Login</h1>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <ul class="breadcrumb-nav">
-                        <li><a href="index.html"><i class="lni lni-home"></i> Home</a></li>
-                        <li>Login</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{ $breadcrumb ?? '' }}
     <!-- End Breadcrumbs -->
 
-    <!-- Start Account Login Area -->
+    <!-- Our Area -------------------------------------------------------------->
 
-    {{  }}
 
-    <!-- End Account Login Area -->
+    {{ $slot }}
+
+    <!-- Our Area ------------------------------------------------------------->
 
     <!-- Start Footer Area -->
     <footer class="footer">
@@ -377,7 +309,7 @@
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="footer-logo">
                                 <a href="index.html">
-                                    <img src="assets/images/logo/white-logo.svg" alt="#">
+                                    <img src="{{ asset('FrontAssets/images/logo/white-logo.svg') }}" alt="#">
                                 </a>
                             </div>
                         </div>
@@ -486,7 +418,8 @@
                         <div class="col-lg-4 col-12">
                             <div class="payment-gateway">
                                 <span>We Accept:</span>
-                                <img src="assets/images/footer/credit-cards-footer.png" alt="#">
+                                <img src="{{ asset('FrontAssets/images/footer/credit-cards-footer.png') }}"
+                                    alt="#">
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
@@ -518,13 +451,13 @@
     <a href="#" class="scroll-top">
         <i class="lni lni-chevron-up"></i>
     </a>
-    <link rel="stylesheet" href="{{ asset('AdminAssets/css/tiny-slider.css') }}" />
 
     <!-- ========================= JS here ========================= -->
-    <script src="{{ asset('AdminAssets/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('AdminAssets/js/tiny-slider.js')}}"></script>
-    <script src="{{ asset('AdminAssets/js/glightbox.min.js')}}"></script>
-    <script src="{{ asset('AdminAssets/js/main.js')}}"></script>
+    <script src="{{asset('FrontAssets/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('FrontAssets/js/tiny-slider.js')}}"></script>
+    <script src="{{asset('FrontAssets/js/glightbox.min.js')}}"></script>
+    <script src="{{asset('FrontAssets/js/main.js')}}"></script>
+    @stack('scripts')
 </body>
 
 </html>
