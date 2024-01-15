@@ -1,7 +1,5 @@
 - ترتيب الروتس مهم ولو حصل مشكلة ممكن تيجي ف اخر الروت وتحط شرط مثلا ان البارامتر بتاع الروت يكون حاجة معينة
-
 - soft delete : بتزود فيلد ف المودل وبتدخل ع كلاس المودل تفعلها وتعملها التلاته فانكشن بتوعها انك تشوف كل اللى اتسمح وانك ترجع وانك تمسحه مدي الحياة
-
 - local scope : زي فلتر بنعمله ونستخدمه وقت ما نحب بدل ما نكتبه كل شوية
 
 - Relations
@@ -25,3 +23,6 @@ many to many : product -> product_tag ->Tag
         $tagsData = Tag::all();
         foreach($tags as $tag)
             $tag = $tagsData->where('slug' , $slug)->first();
+
+- 09| Layout Components (Store Front) , middlewares : easy
+- 10| shoping cart implementation

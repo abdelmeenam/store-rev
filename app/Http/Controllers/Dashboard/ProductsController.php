@@ -22,7 +22,6 @@ class ProductsController extends Controller
     {
         //$products  = Product::paginate(5);
         $products  = Product::with(['category' , 'store'])->paginate(6);
-
         return view('back.products.index', compact('products'));
     }
 
