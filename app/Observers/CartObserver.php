@@ -8,14 +8,15 @@ use Illuminate\Support\Str;
 class CartObserver
 {
     /**
-     * Handle the Cart "created" event.
+     * Handle the Cart "creating" event.
      *
      * @param  \App\Models\Cart  $cart
      * @return void
      */
-    public function created(Cart $cart)
+    public function creating(Cart $cart)
     {
         $cart->id = Str::uuid();
+        $cart->cookie_id = Cart::getCookieId();
     }
 
     /**

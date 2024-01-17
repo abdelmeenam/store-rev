@@ -26,3 +26,7 @@ many to many : product -> product_tag ->Tag
 
 - 09| Layout Components (Store Front) , middlewares : easy
 - 10| shoping cart implementation
+    - لارافيل بتنفذ الكونستركتور الاول وبعدها الميدل وير وبعدها الميثود
+    - ف تخلى بالك لو الكونستركور فيه حاجة بتعتمد ع الكوكي ميدل وير مثلا شوف اول بارت اخر 1:40
+    - getFacadeAccessor بترجع اسم المتغير اللى انت مخزنه ف السيرفس كونتينر
+    - بنعمل للكارت فساد كلاس
