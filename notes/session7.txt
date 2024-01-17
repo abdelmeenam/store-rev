@@ -30,3 +30,9 @@ many to many : product -> product_tag ->Tag
     - ف تخلى بالك لو الكونستركور فيه حاجة بتعتمد ع الكوكي ميدل وير مثلا شوف اول بارت اخر 1:40
     - getFacadeAccessor بترجع اسم المتغير اللى انت مخزنه ف السيرفس كونتينر
     - بنعمل للكارت فساد كلاس
+
+- 10| chekout orders
+    - if the pivot table has extra data and you wanna get it
+          ->withPivot([ 'product_name', 'price', 'quantity', 'options',]);
+    - لو الجدول الوسيط ملتزمتش بالتسمية الصحيحة بتاعته لازم تعمل السيتنج بتاعته شبه
+    - extens Pivot , table , incrementing , timestamps
