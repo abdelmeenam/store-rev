@@ -59,7 +59,7 @@
 
 
             <!-------------------- Notifications Dropdown Menu ----------------->
-            {{--   <x-dashboard.notifications-menu count=7 />--}}
+            <x-dashboard.notification-menu count=7 />
 
             <li class="nav-item">
                 <a class="nav-link" data-widget="fullscreen" href="#" role="button">

@@ -20,14 +20,14 @@
 
 <body>
         <!-- Preloader -->
-        <div class="preloader">
+        {{-- <div class="preloader">
             <div class="preloader-inner">
                 <div class="preloader-icon">
                     <span></span>
                     <span></span>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /End Preloader -->
     <!-- Start Header Area -->
     <header class="header navbar-area">
@@ -101,7 +101,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="{{ route('home') }}">
                             <img src="{{ asset('FrontAssets/images/logo/logo.svg') }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->

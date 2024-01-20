@@ -35,4 +35,7 @@ many to many : product -> product_tag ->Tag
     - if the pivot table has extra data and you wanna get it
           ->withPivot([ 'product_name', 'price', 'quantity', 'options',]);
     - لو الجدول الوسيط ملتزمتش بالتسمية الصحيحة بتاعته لازم تعمل السيتنج بتاعته شبه
-    - extens Pivot , table , incrementing , timestamps
+    - extends Pivot , table , incrementing , timestamps
+
+11 | Notifications
+    اخر فيديو بتاع البوشر والريل تايم

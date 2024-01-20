@@ -78,7 +78,6 @@ class CartModelRepository implements CartRepository
         //         ->SelectRaw('SUM(products.price * carts.quantity) as total') // TO WRITE ROW STATMENT
         //         ->value('total');   //to get only total value instead of cartobject
 
-
          return $this->get()->sum(function ($item) {
              return $item->quantity * $item->product->price;
          });
