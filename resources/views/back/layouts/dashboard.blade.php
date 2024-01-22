@@ -99,9 +99,7 @@
                 </div>
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        Log out
-                    </button>
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Logout</button>
                 </form>
             </div>
 

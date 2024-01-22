@@ -7,9 +7,10 @@ use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
 
-Route::group(['middleware' => ['auth' , 'verified' , 'auth.type:admin,super-admin'], 'prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
-
-
+Route::group(
+            ['middleware' => ['auth:admin' , 'verified'] ,
+            'prefix' => 'admin/dashboard', 'as' => 'dashboard.']
+              , function () {
     //-------Profile
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
