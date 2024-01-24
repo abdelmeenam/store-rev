@@ -31,7 +31,6 @@ class Product extends Model
         'image_url'
     ];
 
-
     protected static function booted()
     {
         static::addGlobalScope('StoreScope' , new StoreScope);
@@ -51,9 +50,6 @@ class Product extends Model
         });
 
     }
-
-
-
 
 
     public function scopeActive( Builder $builder){

@@ -5,11 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +28,8 @@ class ProductController extends Controller
         ->with('category:id,name', 'store:id,name', 'tags:id,name')
         ->paginate(5);
 
-        return Response::json($products, 201);
-    // ProductResource::collection();
-
+        //return Response::json($products, 201);
+        return ProductResource::collection($products);
     }
 
     /**
@@ -55,9 +61,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-
-        return $product
-            ->load('category:id,name', 'store:id,name', 'tags:id,name');    }
+        //return $product ->load('category:id,name', 'store:id,name', 'tags:id,name');
+        return new ProductResource($product);
+      }
 
     /**
      * Update the specified resource in storage.
