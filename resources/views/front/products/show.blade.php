@@ -20,6 +20,17 @@
         </div>
     </x-slot:breadcrumb>
 
+       <!-- Display Alert  components-->
+       @if($errors->any())
+            @foreach($errors->all() as $error)
+               <div class="alert alert-danger">
+                    <span>{{ $error }}</span>
+                </div>
+            @endforeach
+        @endif
+
+
+
 
     <!-- Start Item Details -->
     <section class="item-details section">

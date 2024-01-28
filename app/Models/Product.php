@@ -33,7 +33,7 @@ class Product extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope('StoreScope' , new StoreScope);
+        //static::addGlobalScope('StoreScope' , new StoreScope);
         //or
         // static::addGlobalScope('StoreScope', function (Builder $builder) {
         //     $builder->where('store_id', Auth::user()->store_id);
@@ -44,13 +44,15 @@ class Product extends Model
         static::creating(function(Product $product) {
             $product->slug = Str::slug($product->name);
         });
-
         static::updating(function(Product $product) {
             $product->slug = Str::slug($product->name);
         });
-
     }
 
+
+   public function scopeStore( Builder $builder){
+        $builder->where('store_id', Auth::user()->store_id);
+    }
 
     public function scopeActive( Builder $builder){
         $builder->where('status',  'active');

@@ -59,6 +59,7 @@
                                 <a href="{{ route('dashboard.products.show', $item->product->slug) }}"><img
                                         src="{{ $item->product->image_url }}"></a>
                             </div>
+
                             <div class="col-lg-4 col-md-3 col-12">
                                 <h5 class="product-name"><a
                                         href="{{ route('dashboard.products.show', $item->product->slug) }}">
@@ -68,15 +69,18 @@
                                     <span><em>Color:</em> Black</span>
                                 </p>
                             </div>
+
                             <div class="col-lg-2 col-md-2 col-12">
                                 <div class="count-input">
                                     <input class="form-control item-quantity" data-id="{{ $item->id }}"
                                         value="{{ $item->quantity }}">
                                 </div>
                             </div>
+
                             <div class="col-lg-2 col-md-2 col-12">
                                 <p>{{ Currency::format($item->quantity * $item->product->price) }}</p>
                             </div>
+
                             <div class="col-lg-2 col-md-2 col-12">
                                 <p>{{ Currency::format(0) }}</p>
                             </div>

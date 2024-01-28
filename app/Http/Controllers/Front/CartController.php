@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Front;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Rules\CartValidation;
+use App\Rules\StockValidation;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use App\Repositories\Cart\CartRepository;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -47,13 +51,18 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validations = Validator::make($request->all(), [
             'product_id' => ['required', 'int', 'exists:products,id'],
-            'quantity' => ['nullable', 'int', 'min:1'],
+            'quantity' => ['nullable', 'int', 'min:1' , new StockValidation($request->product_id)],
         ]);
+
+        if ($validations->fails()) {
+            return Redirect::back()->withErrors($validations);
+        }
 
         $product = Product::findOrFail($request->post('product_id'));
         $this->cart->add($product, $request->post('quantity'));
+
         if ($request->expectsJson()) {
             return [
                 'message' => "Item added to cart",
@@ -95,9 +104,15 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'quantity' => ['required', 'int', 'min:1'],
+
+        $validations = Validator::make($request->all(), [
+            'product_id' => 'required|exists:products,id',
+            'quantity' => ['required', 'int',new CartValidation($request->product_id)]
         ]);
+
+        if ($validations->fails()) {
+            return $this->apiResponse(400, 'validation errors', $validations->errors());
+        }
 
         $this->cart->update($id, $request->post('quantity'));
     }
