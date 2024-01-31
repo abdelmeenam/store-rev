@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\CurrencyConverter;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('currency.converter', function () {
+            return new CurrencyConverter(config('services.currency_converter.api_key'));
+        });
     }
 
     /**

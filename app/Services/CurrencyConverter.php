@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Http;
 class CurrencyConverter
 {
     private $apiKey;
-
     protected $baseUrl = 'https://free.currconv.com/api/v7';
 
     public function __construct(string $apiKey)
@@ -17,16 +16,9 @@ class CurrencyConverter
 
     public function convert(string $from, string $to, float $amount = 1): float
     {
-        $q = "{$from}_{$to}";
-        $response = Http::baseUrl($this->baseUrl)
-            ->get('/convert', [
-                'q' => $q,
-                'compact' => 'y',
-                'apiKey' => $this->apiKey,
-            ]);
-
+        $q = "{$from}_{$to}";   //USD_JOD
+        $response = Http::baseUrl($this->baseUrl)->get('/convert', ['q' => $q,'compact' => 'y','apiKey' => $this->apiKey]);
         $result = $response->json();
-
         return $result[$q]['val'] * $amount;
     }
 }
