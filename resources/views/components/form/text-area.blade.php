@@ -6,8 +6,7 @@
     <label for="">{{ $label }}</label>
 @endif
 
-<textarea name="{{ $name }}" {{ $attributes->class([ 'form-control',  'is-invalid' => $errors->has($name) ])}}> {{ old($name, $value) }}
-</textarea>
+<textarea name="{{ $name }}" {{$attributes->class([ 'form-control','is-invalid' => $errors->has($name) ])}}>{{old($name, $value)}}</textarea>
 
 @error($name)
     <div class="invalid-feedback">

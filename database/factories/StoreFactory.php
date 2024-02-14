@@ -21,9 +21,11 @@ class StoreFactory extends Factory
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'description' => $this->faker->sentence(2),
+            'description' => $this->faker->paragraph,
             'logo_image' => $this->faker->imageUrl(300 , 300),
             'cover_image' => $this->faker->imageUrl(800,600),
+            'status' => $this->faker->randomElement(['active', 'inactive']),
+
         ];
     }
 }

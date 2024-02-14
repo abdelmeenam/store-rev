@@ -11,13 +11,12 @@ use App\Http\Controllers\Front\Auth\TwoFactorAuthController;
 
 Route::get('/', [HomeController::class , 'index'])
     ->name('home');
-
 Route::get('/products' , [ProductsController::class , 'index'])
     ->name('products.index');
 
 // when laravel get this product it will do this Product::where('slug' = $slug)
-Route::get('/products/{product:slug}' , [ProductsController::class , 'show'])
-    ->name('products.show');
+Route::get('/products/{product:slug}' , [ProductsController::class , 'show'])->name('products.show');
+
 Route::resource('cart' ,CartController::class);
 
 Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
@@ -29,3 +28,4 @@ Route::post('currency', [CurrencyController::class, 'store'])->name('currency.st
 
 //require __DIR__ . '/auth.php';           // breeze routes
 require __DIR__ . '/dashboard.php';
+require __DIR__.'/vendor.php';

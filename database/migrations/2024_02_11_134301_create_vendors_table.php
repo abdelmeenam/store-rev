@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create('vendors', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("slug")->unique();
-            $table->text("description")->nullable();
-            $table->string("logo_image")->nullable();
-            $table->string("cover_image")->nullable();
-            $table->enum("status", ["active", "inactive"])->default("active");
-            $table->string('phone_number')->nullable();
+            $table->string('name');
+            $table->string('email')->unique('vendors');
+            $table->string('password');
+            $table->string('phone');
+            $table->boolean('active')->default(1);
+            $table->foreignId('store_id')->nullable()->constrained('stores')->nullOnDelete();
+            $table->rememberToken();
 
             $table->softDeletes();
             $table->timestamps();
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('vendors');
     }
 };

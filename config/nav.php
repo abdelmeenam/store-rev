@@ -15,18 +15,41 @@ return [
         'active' => 'dashboard.categories.*',
     ],
     [
-        'icon' => 'fas fa-users nav-icon',
+        'icon' => 'fas fa-shopping-cart nav-icon',
         'route' => 'dashboard.products.index',
         'title' => 'Products',
         'badge' => 'products',
-         'active' => 'dashboard.products.*',
+        'active' => 'dashboard.products.*'
     ],
     [
+        'icon' => 'fas fa-store-alt nav-icon ',
+        'route' => 'dashboard.stores.index',
+        'title' => 'Stores',
+        'badge' => 'stores',
+        'active' => 'dashboard.stores.*',
+    ],
+
+    [
         'icon' => 'fas fa-users nav-icon',
+        'route' => 'dashboard.vendors.index',
+        'title' => 'Vendors',
+        'badge' => 'vendors',
+        'active' => 'dashboard.vendors.*',
+    ],
+
+    [
+        'icon' => 'fas fa-user-alt nav-icon',
         'route' => 'dashboard.users.index',
         'title' => 'Users',
-        'badge' => 'Users',
-         'active' => 'dashboard.users.*',
+        'badge' => 'users',
+        'active' => 'dashboard.users.*',
+    ],
+    [
+        'icon' => 'fas fa-money-check-alt nav-icon',
+        'route' => 'dashboard.users.index',
+        'title' => 'Orders',
+        'badge' => 'orders',
+        'active' => 'dashboard.users.*',
     ],
 
     [
@@ -35,5 +58,6 @@ return [
         'title' => 'Logout',
         'active' => 'logout',
     ],
+
 
 ];

@@ -2,9 +2,10 @@
 
 namespace App\Helpers;
 
+use NumberFormatter;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
-use NumberFormatter;
+//use NumberFormatter;
 
 class Currency
 {
