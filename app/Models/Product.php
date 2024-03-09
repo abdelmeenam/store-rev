@@ -15,19 +15,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name', 'slug', 'description', 'image', 'category_id', 'store_id',
         'price', 'compare_price', 'status',
     ];
 
-    protected $hidden =[
-        'created_at', 'updated_at', 'deleted_at','image'
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at', 'image'
     ];
 
     // appends some attributes through their accessors functions
-    protected $appends =[
+    protected $appends = [
         'image_url'
     ];
 
@@ -41,20 +41,23 @@ class Product extends Model
 
 
         // first method when i have to listen to single event
-        static::creating(function(Product $product) {
+        static::creating(function (Product $product) {
             $product->slug = Str::slug($product->name);
         });
-        static::updating(function(Product $product) {
+
+        static::updating(function (Product $product) {
             $product->slug = Str::slug($product->name);
         });
     }
 
 
-   public function scopeStore( Builder $builder){
+    public function scopeStore(Builder $builder)
+    {
         $builder->where('store_id', Auth::user()->store_id);
     }
 
-    public function scopeActive( Builder $builder){
+    public function scopeActive(Builder $builder)
+    {
         $builder->where('status',  'active');
     }
 
@@ -79,16 +82,16 @@ class Product extends Model
         if (!$this->compare_price) {
             return 0;
         }
-        return round( ( 100* ($this->compare_price - $this->price) / $this->compare_price)  );
+        return round((100 * ($this->compare_price - $this->price) / $this->compare_price));
     }
 
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id')
-        ->withDefault([
-            'name'=> 'empty category',
-        ]);
+            ->withDefault([
+                'name' => 'empty category',
+            ]);
     }
 
     public function store()
@@ -96,7 +99,8 @@ class Product extends Model
         return $this->belongsTo(Store::class, 'store_id', 'id');
     }
 
-    public function tags(){
+    public function tags()
+    {
         return $this->belongsToMany(
             Tag::class,      //Related model
             'product_tag',     //Pivot table
@@ -119,14 +123,14 @@ class Product extends Model
         $builder->when($options['status'], function ($query, $status) {
             return $query->where('status', $status);
         });
-        $builder->when($options['store_id'], function($builder, $value) {
+        $builder->when($options['store_id'], function ($builder, $value) {
             $builder->where('store_id', $value);
         });
-        $builder->when($options['category_id'], function($builder, $value) {
+        $builder->when($options['category_id'], function ($builder, $value) {
             $builder->where('category_id', $value);
         });
-        $builder->when($options['tag_id'], function($builder, $value) {
-            $builder->whereExists(function($query) use ($value) {
+        $builder->when($options['tag_id'], function ($builder, $value) {
+            $builder->whereExists(function ($query) use ($value) {
                 $query->select(1)
                     ->from('product_tag')
                     ->whereRaw('product_id = products.id')
@@ -142,5 +146,4 @@ class Product extends Model
             // });
         });
     }
-
 }

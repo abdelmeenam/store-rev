@@ -25,40 +25,43 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-         $request = request();
-         if ($request->is('admin/*')) {
-             Config::set('fortify.guard', 'admin');
-             Config::set('fortify.passwords', 'admins');
-             Config::set('fortify.prefix', 'admin');
-             // [1] first method
-             //Config::set('fortify.home', 'admin/dashboard');        // to redirect the auth (admin or user ) to it's supposed home(dashboard or home)
-         }
+        $request = request();
+        if ($request->is('admin/*')) {
+            Config::set('fortify.guard', 'admin');
+            Config::set('fortify.passwords', 'admins');
+            Config::set('fortify.prefix', 'admin');
+            // [1] first method
+            //Config::set('fortify.home', 'admin/dashboard');        // to redirect the auth (admin or user ) to it's supposed home(dashboard or home)
+        }
 
-         if ($request->is('vendor/*')) {
+        if ($request->is('vendor/*')) {
             Config::set('fortify.guard', 'vendor');
             Config::set('fortify.password', 'vendors');
             Config::set('fortify.prefix', 'vendor');
         }
 
-         // [2] Second Method
-         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
-            public function toResponse($request) {
+        // [2] Second Method
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse
+        {
+            public function toResponse($request)
+            {
                 if ($request->user('admin')) {
                     return redirect()->intended('admin/dashboard');
                 }
                 if ($request->user('vendor')) {
-                        return redirect('vendor/dashboard');
+                    return redirect('vendor/dashboard');
                 }
                 return redirect()->intended('/');
             }
         });
 
-        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
-            public function toResponse($request) {
+        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse
+        {
+            public function toResponse($request)
+            {
                 return redirect('/');
             }
         });
-
     }
 
     /**
@@ -70,27 +73,23 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
-
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
             return Limit::perMinute(5)->by($throttleKey);
         });
-
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
-           if (Config::get('fortify.guard') == 'admin') {
-            Fortify::authenticateUsing([new AuthenticateUser , 'authenticate']);
+
+        if (Config::get('fortify.guard') == 'admin') {
+            Fortify::authenticateUsing([new AuthenticateUser, 'authenticate']);
             Fortify::viewPrefix('auth.');
-        }
-        elseif (Config::get('fortify.guard') == 'vendor') {
-            Fortify::authenticateUsing([new CustomAuthentication(),'authenticateVendor']);
+        } elseif (Config::get('fortify.guard') == 'vendor') {
+            Fortify::authenticateUsing([new CustomAuthentication(), 'authenticateVendor']);
             Fortify::viewPrefix('backend.auth.vendor.');
-        }
-        else {
+        } else {
             Fortify::viewPrefix('front.auth.');
         }
-
     }
 }

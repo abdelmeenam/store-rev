@@ -34,9 +34,7 @@ class OrderCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast' , 'mail'];
-
-        $channels = ['database'];
+        $channels = ['database', 'mail'];
         if ($notifiable->notification_preferences['order_created']['sms'] ?? false) {
             $channels[] = 'vonage';
         }
@@ -47,7 +45,7 @@ class OrderCreatedNotification extends Notification
             $channels[] = 'broadcast';
         }
         return $channels;
-     }
+    }
 
     /**
      * Get the mail representation of the notification.
@@ -58,11 +56,12 @@ class OrderCreatedNotification extends Notification
     public function toMail($notifiable)
     {
         $addr = $this->order->billingAddress;
+        $greeting = isset($notifiable->name) ? "Hi {$notifiable->name}," : 'Hi,';
 
         return (new MailMessage)
             ->subject("New Order #{$this->order->number}")
             ->from('notification@souqy.com', 'Souqy')
-            ->greeting("Hi {$notifiable->name},")
+            ->greeting($greeting)
             ->line("A new order (#{$this->order->number}) created by {$addr->name} from {$addr->country_name}.")
             ->action('View Order', url('/dashboard'))
             ->line('Thank you for using our application!');

@@ -45,7 +45,7 @@ class CheckoutController extends Controller
 
                 $order = Order::create([
                     'store_id' => $store_id,
-                    'user_id' => Auth::id(),
+                    'user_id' => Auth::id() ?? NULL,
                     'payment_method' => 'cod',
                 ]);
 
@@ -63,16 +63,9 @@ class CheckoutController extends Controller
                     $address['type'] = $type;
                     $order->addresses()->create($address);
                 }
-
             }
-
-            //$cart->empty();
-
             DB::commit();
-
-            //`event('order.created', $order, Auth::user());
             event(new OrderCreated($order));
-
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
@@ -81,6 +74,4 @@ class CheckoutController extends Controller
         //return redirect()->route('orders.payments.create', $order->id);
         return redirect()->route('home');
     }
-
-
 }

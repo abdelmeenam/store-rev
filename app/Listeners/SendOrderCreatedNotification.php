@@ -3,11 +3,14 @@
 namespace App\Listeners;
 
 use App\Models\User;
+use App\Models\Admin;
+use App\Models\Vendor;
 use App\Events\OrderCreated;
-use App\Notifications\OrderCreatedNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\OrderCreatedNotification;
 
 class SendOrderCreatedNotification
 {
@@ -29,15 +32,25 @@ class SendOrderCreatedNotification
      */
     public function handle(OrderCreated $event)
     {
-        $order =  $event->order;
-        $user = User::where('store_id' ,$order->store_id)->first();
-        // dd($order);
-        $user->notify(new OrderCreatedNotification($order));
+        $order = $event->order;
 
-        // if i have more than user
-        // $users = User::where('store_id' ,$order->store_id)->get();
-        // Notification::send($users , new OrderCreatedNotification($order));
+        // Send the notification to the user
+        if (Auth::check()) {
+            $user = User::where('store_id', $order->store_id)->get();
+            $user->notify(new OrderCreatedNotification($order));
+        } else {
+            // Send the notification to the Guest
+            $orderData = $order->addresses()->get();
+            Notification::route('mail', $orderData[0]['email'])->notify(new OrderCreatedNotification($order));
+        }
+
+        // Send the notification to the vendors
+        $vendors = Vendor::where('store_id', $order->store_id)->get();
+        Notification::send($vendors, new OrderCreatedNotification($order));
 
 
+        // Send the notification to the Admins
+        $admins = Admin::get();  //send notifiaction to all admins
+        Notification::send($admins, new OrderCreatedNotification($order));
     }
 }

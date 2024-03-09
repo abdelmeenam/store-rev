@@ -10,9 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Admin extends User
 {
-    use HasFactory , Notifiable ,HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens;
     protected $fillable = [
         'name', 'email', 'password', 'phone_number', 'super_admin', 'status',
     ];
-
 }

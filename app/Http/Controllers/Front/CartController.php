@@ -53,7 +53,7 @@ class CartController extends Controller
     {
         $validations = Validator::make($request->all(), [
             'product_id' => ['required', 'int', 'exists:products,id'],
-            'quantity' => ['nullable', 'int', 'min:1' , new StockValidation($request->product_id)],
+            'quantity' => ['nullable', 'int', 'min:1', new StockValidation($request->product_id)],
         ]);
 
         if ($validations->fails()) {
@@ -107,7 +107,7 @@ class CartController extends Controller
 
         $validations = Validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
-            'quantity' => ['required', 'int',new CartValidation($request->product_id)]
+            'quantity' => ['required', 'int', new CartValidation($request->product_id)]
         ]);
 
         if ($validations->fails()) {
@@ -127,8 +127,8 @@ class CartController extends Controller
     {
         $this->cart->delete($id);
 
-        return[
-            'message' =>'item deleted'
+        return [
+            'message' => 'item deleted'
         ];
     }
 }

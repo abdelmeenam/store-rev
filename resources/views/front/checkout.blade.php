@@ -313,4 +313,5 @@
             </div>
         </div>
     </section>
+
 </x-front-layout>

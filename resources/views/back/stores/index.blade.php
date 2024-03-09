@@ -32,7 +32,7 @@
                     <td>{{ $store->id }}</td>
                     <td><a href="{{ route('dashboard.stores.show', $store->id) }}">{{ $store->name }}</a></td>
                     <td>{{ $store->description }}</td>
-                    <td><img src="{{ asset('storage/' . $store->logo_image) }}" alt="" height="50"></td>
+                    <td><img src="{{ $store->ImageUrl}}" alt="" height="50"></td>
                     <td><img src="{{ asset('storage/' . $store->cover_image) }}" alt="" height="50"></td>
                     <td>{{ $store->status }}</td>
                     <td>

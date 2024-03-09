@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Store::factory(10)->create();
+        //Store::factory(10)->create();
         //Category::factory(10)->create();
         //Product::factory(50)->create();
-        //Admin::factory(5)->create();
+        Admin::factory(3)->create();
         // php artisan db:seed
 
 

@@ -48,7 +48,6 @@ class StoresController extends Controller
         $data = $request->except('logo_image');
         $path = $this->uploadImage($request);
         $data['logo_image'] = $path;
-
         $store = Store::create($data);
         return redirect()->route('dashboard.stores.index')->with('success', 'store created successfuly');
     }
@@ -65,7 +64,7 @@ class StoresController extends Controller
             return;
         }
         $file = $request->file('logo_image');
-        $path = $file->Store('uploads', ['disk' => 'public']);
+        $path = $file->Store('uploads/stores', ['disk' => 'public']);
         return $path;
     }
 
@@ -104,7 +103,7 @@ class StoresController extends Controller
         //
     }
 
- /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -125,16 +124,18 @@ class StoresController extends Controller
         return view('back.stores.trash', compact('stores'));
     }
 
-    public function restore(Request $request , $id){
+    public function restore(Request $request, $id)
+    {
         $store = Store::onlyTrashed()->findOrFail($id);
         $store->restore();
         return redirect()->route('dashboard.stores.trash')->with('success', 'Store restored successfuly');
     }
 
 
-     public function forceDelete($id){
+    public function forceDelete($id)
+    {
         $store = Store::onlyTrashed()->findOrFail($id);
-        !isNull($store->logo_image)?? Storage::disk('public')->delete($store->logo_image);
+        !isNull($store->logo_image) ?? Storage::disk('public')->delete($store->logo_image);
         $store->forceDelete();
         return redirect()->route('dashboard.stores.trash')->with('success', 'Store force deleted successfuly');
     }
