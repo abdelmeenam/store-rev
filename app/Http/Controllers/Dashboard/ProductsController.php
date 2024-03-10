@@ -21,7 +21,7 @@ class ProductsController extends Controller
     public function index()
     {
         //$products  = Product::paginate(5);
-        $products  = Product::with(['category' , 'store'])->paginate(6);
+        $products  = Product::with(['category', 'store'])->paginate(6);
         return view('back.products.index', compact('products'));
     }
 
@@ -36,7 +36,7 @@ class ProductsController extends Controller
         $tags = new Product();
         $categories = Category::all();
 
-        return view('back.products.create'  , compact('product' , 'categories' , 'tags'));
+        return view('back.products.create', compact('product', 'categories', 'tags'));
     }
 
     /**
@@ -72,7 +72,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $tags = implode(',', $product->tags()->pluck('name')->toArray());
         $categories = Category::all();
-        return view('back.products.edit', compact('product' , 'categories' , 'tags'));
+        return view('back.products.edit', compact('product', 'categories', 'tags'));
     }
 
     /**
@@ -93,9 +93,9 @@ class ProductsController extends Controller
         foreach ($tags as $t_name) {
             //$slug = Str::slug($t_name);
             $slug = Str::slug($t_name->value);      //access object
-            $tag = $tagsData->where('slug' , $slug)->first();
-            if (!$tag ) {
-                $tag = Tag::create(['name'=>$t_name->value, 'slug'=>$slug]);
+            $tag = $tagsData->where('slug', $slug)->first();
+            if (!$tag) {
+                $tag = Tag::create(['name' => $t_name->value, 'slug' => $slug]);
             }
             $tag_ids[] = $tag->id;
         }
@@ -123,14 +123,16 @@ class ProductsController extends Controller
         return view('back.products.trash', compact('products'));
     }
 
-    public function restore(Request $request , $id){
+    public function restore(Request $request, $id)
+    {
         $product = Product::onlyTrashed()->findOrFail($id);
         $product->restore();
         return redirect()->route('dashboard.products.trash')->with('success', 'product restored successfuly');
     }
 
 
-     public function forceDelete($id){
+    public function forceDelete($id)
+    {
         $product = Product::onlyTrashed()->findOrFail($id);
         Storage::disk('public')->delete($product->image);
         $product->forceDelete();

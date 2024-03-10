@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use Auth;
 use App\Models\Store;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User;
 
-class Vendor extends Model
+class Vendor extends User
 {
     use HasFactory, SoftDeletes, Notifiable;
     protected $fillable = ['name', 'email', 'password', 'phone', 'active', 'store_id'];

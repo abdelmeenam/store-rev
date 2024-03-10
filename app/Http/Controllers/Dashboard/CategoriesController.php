@@ -49,9 +49,9 @@ class CategoriesController extends Controller
 
         // SEARCH METHOD [3]
         $categories = Category::with('parent')
-        ->withCount('products')
-        ->Filter($request->query())
-        ->paginate(5);
+            ->withCount('products')
+            ->Filter($request->query())
+            ->paginate(5);
 
 
 
@@ -197,18 +197,19 @@ class CategoriesController extends Controller
         return view('back.categories.trash', compact('categories'));
     }
 
-    public function restore(Request $request , $id){
+    public function restore(Request $request, $id)
+    {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
         return redirect()->route('dashboard.categories.trash')->with('success', 'category restored successfuly');
     }
 
 
-     public function forceDelete($id){
+    public function forceDelete($id)
+    {
         $category = Category::onlyTrashed()->findOrFail($id);
         Storage::disk('public')->delete($category->image);
         $category->forceDelete();
         return redirect()->route('dashboard.categories.trash')->with('success', 'category force deleted successfuly');
     }
-
 }

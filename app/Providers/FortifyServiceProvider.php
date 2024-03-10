@@ -11,6 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\AuthenticateUser;
 use App\Actions\Fortify\ResetUserPassword;
+use App\Actions\Fortify\AuthenticateVendor;
 use App\Actions\Fortify\UpdateUserPassword;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Contracts\LoginResponse;
@@ -59,7 +60,13 @@ class FortifyServiceProvider extends ServiceProvider
         {
             public function toResponse($request)
             {
-                return redirect('/');
+                if ($request->user('admin')) {
+                    return redirect()->intended('admin/login');
+                }
+                if ($request->user('vendor')) {
+                    return redirect('vendor/login');
+                }
+                return redirect()->intended('/');
             }
         });
     }
@@ -73,6 +80,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
             return Limit::perMinute(5)->by($throttleKey);
@@ -83,11 +91,11 @@ class FortifyServiceProvider extends ServiceProvider
 
 
         if (Config::get('fortify.guard') == 'admin') {
-            Fortify::authenticateUsing([new AuthenticateUser, 'authenticate']);
+            Fortify::authenticateUsing([new CustomAuthentication(), 'authenticateAdmin']);
             Fortify::viewPrefix('auth.');
         } elseif (Config::get('fortify.guard') == 'vendor') {
             Fortify::authenticateUsing([new CustomAuthentication(), 'authenticateVendor']);
-            Fortify::viewPrefix('backend.auth.vendor.');
+            Fortify::viewPrefix('Backend.vendor.auth.');
         } else {
             Fortify::viewPrefix('front.auth.');
         }

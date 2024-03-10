@@ -19,17 +19,22 @@
             <div class="col-md-6">
                 <x-form.input name="first_name" label="First Name" :value="$user->profile->first_name" />
             </div>
+
             <div class="col-md-6">
                 <x-form.input name="last_name" label="Last Name" :value="$user->profile->last_name" />
             </div>
         </div>
+
         <div class="form-row">
+
             <div class="col-md-6">
                 <x-form.input name="birthday" type="date" label="Birthday" :value="$user->profile->birthday" />
             </div>
+
             <div class="col-md-6">
                 <x-form.radio name="gender" label="Gender" :options="['male'=>'Male', 'female'=>'Female']" :checked="$user->profile->gender" />
             </div>
+
         </div>
         <div class="form-row">
             <div class="col-md-4">

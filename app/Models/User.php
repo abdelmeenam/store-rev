@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable , TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,12 +49,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     // each user has only one profile
-    public function profile(){
-        return $this->hasOne(Profile::class , 'user_id' , 'id')
-        ->withDefault([             //if you don't make default values you will face [Attempt to read property "first_name" on null] problem when you edit profile
-            'first_name' => 'default name',
-            'last_name' => 'default last name'
-        ])
-        ;
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id')
+            ->withDefault([             //if you don't make default values you will face [Attempt to read property "first_name" on null] problem when you edit profile
+                'first_name' => 'default name',
+                'last_name' => 'default last name'
+            ]);
     }
 }

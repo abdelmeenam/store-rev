@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
+
 
 class DashboardController extends Controller
 {

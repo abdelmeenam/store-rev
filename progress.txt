@@ -1,2 +1,5 @@
-- login as a vendor to create products
-- 
+- Vendor route
+- vendor login page
+- vendor dashboard with his own stores
+- vendor add products
+

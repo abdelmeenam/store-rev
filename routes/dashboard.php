@@ -14,10 +14,8 @@ Route::group(['middleware' => ['auth:admin', 'verified'],  'prefix' => 'admin/da
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
 
-
     // Home Dashboard
-    Route::get('/', [DashboardController::class, 'index'])
-        ->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     // users routes
     Route::resource('/users', CategoriesController::class);
@@ -34,13 +32,11 @@ Route::group(['middleware' => ['auth:admin', 'verified'],  'prefix' => 'admin/da
     Route::delete('/products/{id}/force-delete', [ProductsController::class, 'forceDelete'])->name('products.force-delete');
     Route::resource('/products', ProductsController::class);
 
-
     // Stores
     Route::get('/stores/trash', [StoresController::class, 'trash'])->name('stores.trash');
     Route::post('/stores/{id}/restore', [StoresController::class, 'restore'])->name('stores.restore');
     Route::delete('/stores/{id}/force-delete', [StoresController::class, 'forceDelete'])->name('stores.force-delete');
     Route::resource('/stores', StoresController::class);
-
 
     // Vendors
     Route::get('/vendors/trash', [VendorsController::class, 'trash'])->name('vendors.trash');
